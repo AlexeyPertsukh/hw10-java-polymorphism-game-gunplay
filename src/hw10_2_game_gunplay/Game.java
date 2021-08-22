@@ -144,6 +144,7 @@ public class Game {
         My.setTextColor(My.ANSI_BLUE);
         System.out.println("-----");
         System.out.println("Бандитская перестрелка в зловещих подворотнях Запорожья");
+        System.out.println("https://github.com/AlexeyPertsukh/hw10-java-polymorphism-game-gunplay");
         System.out.println("-----");
         My.resetTextColor();
     }
