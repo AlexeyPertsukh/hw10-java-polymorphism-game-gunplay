@@ -16,10 +16,6 @@ public class Player {
     private int cntMiss;        //счетчик промахоа
     private final String[] picture;
 
-    public Player(int hitPoint, Gun[] guns, String[] picture) {
-        this("noname", hitPoint, guns, picture);
-    }
-
     public Player(String name, int hitPoint, Gun[] guns, String[] picture) {
         this.name = name;
         this.hitPoint = hitPoint;

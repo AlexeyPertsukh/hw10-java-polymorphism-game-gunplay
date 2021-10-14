@@ -7,10 +7,6 @@ public class Bot extends Player{
 
     private final static int PAUSE = 700;
 
-    public Bot(int hitPoint, Gun[] guns, String[] picture) {
-        this("noname[БОТ]", hitPoint, guns, picture);
-    }
-
     public Bot(String name, int hitPoint, Gun[] guns, String[] picture) {
         super( name + "[БОТ]", hitPoint, guns, picture);
     }

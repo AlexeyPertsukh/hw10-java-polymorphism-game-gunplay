@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Game {
 
-    private static final String VERSION = "ver.1.6";
+    private static final String VERSION = "ver.1.61";
     private static final String COLOR_FOCUS = Color.ANSI_YELLOW;
     private static final String COLOR_DEAD = Color.ANSI_RED;
     private static final String COLOR_HELP = Color.ANSI_BLUE;
