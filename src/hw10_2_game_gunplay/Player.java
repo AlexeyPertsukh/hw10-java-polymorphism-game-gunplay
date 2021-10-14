@@ -27,7 +27,7 @@ public class Player {
         this.hitPoint = hitPoint;
         this.picture = picture;
         this.guns = guns;
-        changeGun(NUM_FIRST_GUN);
+        setFirstGun();
     }
 
     //ввод команды
@@ -105,6 +105,10 @@ public class Player {
         return true;
     }
 
+    private void setFirstGun() {
+        changeGun(NUM_FIRST_GUN);
+    }
+
     //количество пушек
     public int getNumGuns() {
         return guns.length;
@@ -145,4 +149,5 @@ public class Player {
     public Gun getCurrentGun() {
         return currentGun;
     }
+
 }
