@@ -175,17 +175,10 @@ public class Game {
         //цифры
         if(Util.isInteger(cmd)) {
             int num = Integer.parseInt(cmd);
-
-            //сменить пушку
-            if(num > 0 && num < currentPlayer.getNumGuns() + 1) {
-                if(currentPlayer.changeGun(num)) {
-                    printPage();
-                }
-                else {
-                    System.out.println("Поменять пушку не удалось, что-то пошло не так.");
-                }
-                return;
+            if(changeGun(num)) {
+                printPage();
             }
+            return;
         }
 
         if(cmd.equalsIgnoreCase(KEY_HELP)) {
@@ -209,6 +202,19 @@ public class Game {
             return;
         }
         System.out.println("Неизвестная команда");
+    }
+
+    private boolean changeGun(int num) {
+        //сменить пушку
+        if (num > 0 && num < currentPlayer.getNumGuns() + 1) {
+            if (currentPlayer.changeGun(num)) {
+                return true;
+            } else {
+                System.out.println("Поменять пушку не удалось, что-то пошло не так.");
+                return false;
+            }
+        }
+        return false;
     }
 
     //меняем игрока
