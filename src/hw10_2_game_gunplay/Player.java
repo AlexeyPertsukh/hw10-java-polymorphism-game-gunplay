@@ -8,18 +8,6 @@ public class Player {
     public static int HP_MAX = 60;
     public static final String COLOR_FOCUS = Color.ANSI_YELLOW;
 
-    public static final String[] ASCII_PICTURE_LEFT = {
-            "( •_•)  ",
-            "( ง )--г",
-            "/︶\\  ",
-    };
-
-    public static final String[] ASCII_PICTURE_RIGHT = {
-            "  (•_• ) ",
-            "¬--( v)  ",
-            "   /︶\\ ",
-    };
-
     private final Gun[] guns;
     private final String name;
     private int hitPoint;
@@ -70,15 +58,6 @@ public class Player {
         return (0 >= hitPoint);
     }
 
-    //распечатывает рисунок построчно, если все ок- возвращает true
-    public boolean printPictLine(int num) {
-        if(num < 0 || num >= picture.length) {
-            return false;
-        }
-        System.out.println(getStrPictLine(num));
-        return true;
-    }
-
     public String getStrPictLine(int num) {
         if(num < 0 || num >= picture.length) {
             return "";
@@ -107,7 +86,7 @@ public class Player {
     }
 
     //стреляем
-    public int shot() {
+    public void shot(Player player) {
         Gun gun = guns[gunType];
         int damage = gun.shot();
 
@@ -122,8 +101,7 @@ public class Player {
                 cntMiss++;
             }
         }
-
-        return damage;
+        player.inputDamage(damage);
     }
 
     //распечатываем все свои пушки
@@ -181,5 +159,9 @@ public class Player {
 
     public int getHitPoint() {
         return hitPoint;
+    }
+
+    public String[] getPicture() {
+        return picture;
     }
 }
