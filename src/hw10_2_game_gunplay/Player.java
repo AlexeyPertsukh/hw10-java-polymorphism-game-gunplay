@@ -7,13 +7,15 @@ public class Player {
 
     public static int HP_MAX = 60;
     public static final String COLOR_FOCUS = Color.ANSI_YELLOW;
+    public static final int NUM_FIRST_GUN = 1;
+
 
     private final Gun[] guns;
+    private Gun currentGun;
     private final String name;
     private int hitPoint;
     private int cntShot;        //счетчик выстрелов
     private int cntMiss;        //счетчик промахоа
-    private int gunType;        //выбранный тип оружия
     private final String[] picture;
 
     public Player(int hitPoint, Gun[] guns, String[] picture) {
@@ -24,12 +26,8 @@ public class Player {
         this.name = name;
         this.hitPoint = hitPoint;
         this.picture = picture;
-        //создаем свой массив оружия- доступный только этому юзеру
-        this.guns = new Gun[guns.length];
-        for (int i = 0; i < guns.length; i++) {
-            this.guns[i] = new Gun();
-            this.guns[i].loadFrom(guns[i]);
-        }
+        this.guns = guns;
+        changeGun(NUM_FIRST_GUN);
     }
 
     //ввод команды
@@ -39,7 +37,7 @@ public class Player {
 
     //получить повреждение
     public void inputDamage(int damage) {
-        if(damage < 0) {    //если прилетит отрицательный урон- это глюк, здоровье не увеличиваем
+        if (damage < 0) {    //если прилетит отрицательный урон- это глюк, здоровье не увеличиваем
             damage = 0;
         }
         hitPoint -= damage;
@@ -63,15 +61,14 @@ public class Player {
     public String getStrHpLine() {
         StringBuilder str = new StringBuilder();
         int n = (hitPoint * 10) / HP_MAX;
-        if(hitPoint > 0 && n == 0) {    //даже если жизни совсем чуть-чуть, рисуем одну палку жизни
+        if (hitPoint > 0 && n == 0) {    //даже если жизни совсем чуть-чуть, рисуем одну палку жизни
             n = 1;
         }
 
         for (int i = 0; i < 10; i++) {
-            if(n > i) {
+            if (n > i) {
                 str.append("+");
-            }
-            else {
+            } else {
                 str.append("-");
             }
         }
@@ -81,15 +78,14 @@ public class Player {
 
     //стреляем
     public int shot(Player player) {
-        Gun gun = guns[gunType];
-        int damage = gun.shot();
+        int damage = currentGun.shot();
 
-        if(damage == Gun.CODE_NO_CARTRIDGES) {
+        if (damage == Gun.CODE_NO_CARTRIDGES) {
             return Gun.CODE_NO_CARTRIDGES;
         }
         cntShot++;
 
-        if(damage == 0) {
+        if (damage == 0) {
             cntMiss++;
             return Gun.CODE_MISSED;
         }
@@ -99,31 +95,13 @@ public class Player {
 
     }
 
-    //распечатываем все свои пушки
-    public void printGuns() {
-        char ch;
-        String color;
-        System.out.println("Доступное оружие:");
-        for (int i = 0; i < guns.length; i++) {
-            if(gunType == i) {
-                ch = '>';
-                color = COLOR_FOCUS;
-            }
-            else {
-                ch = ' ';
-                color = Color.ANSI_RESET;
-            }
-            Color.printColor(String.format("%c%d. %s   \n", ch, i + 1, guns[i].info()), color);
-        }
-    }
-
     //поменять пушку
     public boolean changeGun(int num) {
         num--;
-        if(num < 0 || num >= guns.length) {
+        if (num < 0 || num >= guns.length) {
             return false;
         }
-        gunType = num;
+        currentGun = guns[num];
         return true;
     }
 
@@ -133,11 +111,11 @@ public class Player {
     }
 
     public String nameGun() {
-        return guns[gunType].getName();
+        return currentGun.getName();
     }
 
     public String shortGunInfo() {
-        return guns[gunType].shortInfo();
+        return currentGun.shortInfo();
     }
 
     public int getCntShot() {
@@ -158,5 +136,13 @@ public class Player {
 
     public String[] getPicture() {
         return picture;
+    }
+
+    public Gun[] getGuns() {
+        return guns;
+    }
+
+    public Gun getCurrentGun() {
+        return currentGun;
     }
 }

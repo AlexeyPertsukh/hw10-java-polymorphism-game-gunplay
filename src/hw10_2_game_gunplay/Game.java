@@ -5,8 +5,9 @@ import java.util.Scanner;
 public class Game {
 
     private static final String VERSION = "ver.1.4";
-    private static final String COLOR_FOCUS = Player.COLOR_FOCUS;
+    private static final String COLOR_FOCUS = Color.ANSI_YELLOW;
     private static final String COLOR_DEAD = Color.ANSI_RED;
+    private static final String COLOR_HELP = Color.ANSI_BLUE;
 
     private static final String NAME1 = "Игрок1";
     private static final String NAME2 = "Игрок2";
@@ -18,8 +19,6 @@ public class Game {
     private static final int MODE_BOT = 2;
     private static final int PAUSE = 3000;
 
-
-    private Gun[] guns;
     private Player player1;
     private Player player2;
     private Player currentPlayer;
@@ -28,13 +27,7 @@ public class Game {
 
 
     public Game() {
-        guns = new Gun[0];
         sc = new Scanner(System.in);
-
-        addGun("Пистолет", 10, 30, 20, 80);
-        addGun("Обрез", 40, 60, 10, 50);
-        addGun("Тротиловая шашка", 60,  85, 4, 20 );
-
     }
 
     //========== основной блок ==================
@@ -63,18 +56,19 @@ public class Game {
         }
 
         //конец игры
+        System.out.println();
         System.out.println("I'll be back");
         System.out.println("JAVA A01 \"ШАГ\", Запорожье 2021");
     }
     //============================================
 
     private void initPlayers(int mode) {
-        player1 = new Player(NAME1, Player.HP_MAX, guns, PictureStorage.ASCII_PICTURE_LEFT);
+        player1 = new Player(NAME1, Player.HP_MAX, createGuns(), PictureStorage.ASCII_PICTURE_LEFT);
         if(mode == MODE_PLAYER) {
-            player2 = new Player(NAME2, Player.HP_MAX + 10, guns, PictureStorage.ASCII_PICTURE_RIGHT);    //второму- больше патронов
+            player2 = new Player(NAME2, Player.HP_MAX + 10, createGuns(), PictureStorage.ASCII_PICTURE_RIGHT);    //второму- больше патронов
         }
         else {
-            player2 = new Bot(NAME2, Player.HP_MAX + 10, guns, PictureStorage.ASCII_PICTURE_RIGHT);
+            player2 = new Bot(NAME2, Player.HP_MAX + 10, createGuns(), PictureStorage.ASCII_PICTURE_RIGHT);
         }
     }
 
@@ -103,14 +97,6 @@ public class Game {
         }
     }
 
-
-    private void addGun(String name, int damageMin, int damageMax, int cartridge, int percentageHit) {
-        Gun[] tmp = new Gun[guns.length + 1];
-        System.arraycopy(guns, 0, tmp, 0, guns.length);
-        tmp[tmp.length - 1] = new Gun(name, damageMin, damageMax, cartridge, percentageHit);
-        guns = tmp;
-    }
-
     private void printHeader() {
         Color.printlnColorRed("-------------------------------------------------------------------------------------------");
         Color.printlnColorRed("           💀💀💀💀💀   КРОВАВАЯ ПЕРЕСТРЕЛКА   💀💀💀💀💀        ");
@@ -125,7 +111,7 @@ public class Game {
                 KEY_EXIT);
         Color.printlnColorBlue(str);
         Color.printlnColorBlue(". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .");
-        currentPlayer.printGuns();
+        printGunsByCurrentPlayer();
         System.out.println(". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .");
     }
 
@@ -155,8 +141,27 @@ public class Game {
         printFooter();
     }
 
+    private void printGunsByCurrentPlayer() {
+        Gun[] guns = currentPlayer.getGuns();
+        Gun currentGun = currentPlayer.getCurrentGun();
+        char ch;
+        String color;
+        System.out.println("Доступное оружие:");
+        for (int i = 0; i < guns.length; i++) {
+            if (currentGun == guns[i]) {
+                ch = '>';
+                color = COLOR_FOCUS;
+            } else {
+                ch = ' ';
+                color = Color.ANSI_RESET;
+            }
+            Color.printColor(String.format("%c%d. %s   \n", ch, i + 1, guns[i].info()), color);
+        }
+
+    }
+
     private void printHelp() {
-        Color.setTextColor(Color.ANSI_BLUE);
+        Color.setTextColor(COLOR_HELP);
         System.out.println("-----");
         System.out.println("Бандитская перестрелка в зловещих подворотнях Запорожья");
         System.out.println("https://github.com/AlexeyPertsukh/hw10-java-polymorphism-game-gunplay");
@@ -293,6 +298,14 @@ public class Game {
         nextPlayer();
         Util.sleep(PAUSE);
         printPage();
+    }
+
+    private Gun[] createGuns() {
+        return new Gun[]{
+                new Gun("Пистолет", 10, 30, 20, 80),
+                new Gun("Обрез", 40, 60, 10, 50),
+                new Gun("Тротиловая шашка", 60, 85, 4, 20)
+        };
     }
 
 }
