@@ -1,7 +1,7 @@
 Lesson theme:
 - classes  
 
-![alt text](gunplay_screenshot1.jpg)
+![alt text](Screenshot_1.jpg)
 
 [02.03.21]
 

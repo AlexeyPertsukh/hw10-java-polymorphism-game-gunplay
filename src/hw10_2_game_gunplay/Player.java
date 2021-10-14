@@ -5,28 +5,28 @@ import java.util.Scanner;
 //Игрок
 public class Player {
 
-    public static int HP_MAX = 100;
+    public static int HP_MAX = 60;
     public static final String COLOR_FOCUS = Color.ANSI_YELLOW;
 
     public static final String[] ASCII_PICTURE_LEFT = {
-            "( •_•)",
-            "( ง )ง",
+            "( •_•)  ",
+            "( ง )--г",
             "/︶\\  ",
     };
 
     public static final String[] ASCII_PICTURE_RIGHT = {
-            "(•_• ) ",
-            " ୧( ୧ )",
-            "  /︶\\",
+            "  (•_• ) ",
+            "¬--( v)  ",
+            "   /︶\\ ",
     };
 
-    private Gun[] guns;
-    private String name;
+    private final Gun[] guns;
+    private final String name;
     private int hitPoint;
     private int cntShot;        //счетчик выстрелов
     private int cntMiss;        //счетчик промахоа
     private int gunType;        //выбранный тип оружия
-    private String[] picture;
+    private final String[] picture;
 
     public Player(int hitPoint, Gun[] guns, String[] picture) {
         this("noname", hitPoint, guns, picture);

@@ -42,10 +42,10 @@ public class Game {
         players = new Player[2];
         players[0] = new Player("Игрок1", Player.HP_MAX, guns, Player.ASCII_PICTURE_LEFT);
         if(mode == 1) {
-            players[1] = new Player("Игрок2", Player.HP_MAX + 20, guns, Player.ASCII_PICTURE_RIGHT);    //второму- больше патронов
+            players[1] = new Player("Игрок2", Player.HP_MAX + 10, guns, Player.ASCII_PICTURE_RIGHT);    //второму- больше патронов
         }
         else {
-            players[1] = new Bot("Игрок2", Player.HP_MAX + 20, guns, Player.ASCII_PICTURE_RIGHT);
+            players[1] = new Bot("Игрок2", Player.HP_MAX + 10, guns, Player.ASCII_PICTURE_RIGHT);
         }
 
         firstPlayer();  //фокус на первого игрока
