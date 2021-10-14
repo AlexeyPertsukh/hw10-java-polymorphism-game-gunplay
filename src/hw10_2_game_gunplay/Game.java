@@ -6,6 +6,8 @@ public class Game {
 
     private static final String VERSION = "ver.1.4";
     private static final String COLOR_FOCUS = Player.COLOR_FOCUS;
+    private static final String COLOR_DEAD = Color.ANSI_RED;
+
     private static final String NAME1 = "Игрок1";
     private static final String NAME2 = "Игрок2";
     private static final String KEY_HELP = "?";
@@ -15,6 +17,7 @@ public class Game {
     private static final int MODE_PLAYER = 1;
     private static final int MODE_BOT = 2;
     private static final int PAUSE = 3000;
+
 
     private Gun[] guns;
     private Player player1;
@@ -116,7 +119,10 @@ public class Game {
 
     private void printFooter() {
         Color.printlnColorBlue(". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .");
-        String str = String.format("? справка     |  + сделать выстрел       |  1-%d сменить оружие       |   0 выход   ", currentPlayer.getNumGuns());
+        String str = String.format("%s справка     |  %s сделать выстрел       |  1-%d сменить оружие       |   %s выход   ", KEY_HELP,
+                KEY_SHOOT,
+                currentPlayer.getNumGuns(),
+                KEY_EXIT);
         Color.printlnColorBlue(str);
         Color.printlnColorBlue(". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .");
         currentPlayer.printGuns();
@@ -165,7 +171,7 @@ public class Game {
 
     private String getColorPlayer(Player player) {
         if(player.isDead()) {
-            return Color.ANSI_RED;
+            return COLOR_DEAD;
         }
         return (player ==  currentPlayer) ? COLOR_FOCUS : Color.ANSI_RESET;
     }
