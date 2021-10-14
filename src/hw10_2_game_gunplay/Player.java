@@ -128,8 +128,8 @@ public class Player {
 
     //распечатываем все свои пушки
     public void printGuns() {
-        char ch = ' ';
-        String color = Color.ANSI_RESET;
+        char ch;
+        String color;
         System.out.println("Доступное оружие:");
         for (int i = 0; i < guns.length; i++) {
             if(gunType == i) {
