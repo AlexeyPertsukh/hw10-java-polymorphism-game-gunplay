@@ -86,7 +86,6 @@ public class Player {
 
         if(damage == Gun.CODE_NO_CARTRIDGES) {
             return Gun.CODE_NO_CARTRIDGES;
-//
         }
         cntShot++;
 
@@ -97,11 +96,6 @@ public class Player {
 
         player.inputDamage(damage);
         return damage;
-
-//        else {
-////            String str = (damage == 0) ? "не попал!" : String.format("противнику нанесен урон %d ед.", damage);
-////            System.out.println(name + ", выстрел: " + str);
-//        }
 
     }
 
