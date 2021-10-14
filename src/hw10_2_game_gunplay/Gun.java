@@ -30,10 +30,9 @@ public class Gun {
 
         int damage = (int) (Math.random() * (damageMax - damageMin)) + damageMin;
 
-        int random0to100 = (int) (Math.random() * 100);
-//        System.out.println(":: " + random0to100); //проверка
-        if( random0to100 > percentageHit) {   //промахнулся?
-            damage = 0;
+        int random = (int) (Math.random() * 100);
+        if( random > percentageHit) {   //промахнулся?
+            damage = CODE_MISSED;
         }
         cartridge--;
         return damage;

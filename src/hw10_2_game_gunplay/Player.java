@@ -6,9 +6,7 @@ import java.util.Scanner;
 public class Player {
 
     public static int HP_MAX = 60;
-    public static final String COLOR_FOCUS = Color.ANSI_YELLOW;
     public static final int NUM_FIRST_GUN = 1;
-
 
     private final Gun[] guns;
     private Gun currentGun;
@@ -85,7 +83,7 @@ public class Player {
         }
         cntShot++;
 
-        if (damage == 0) {
+        if (damage == Gun.CODE_MISSED) {
             cntMiss++;
             return Gun.CODE_MISSED;
         }
@@ -110,7 +108,7 @@ public class Player {
     }
 
     //количество пушек
-    public int getNumGuns() {
+    public int getGunsSize() {
         return guns.length;
     }
 

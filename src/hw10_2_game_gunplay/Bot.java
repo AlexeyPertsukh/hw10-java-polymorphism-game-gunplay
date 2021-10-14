@@ -5,6 +5,8 @@ import java.util.Scanner;
 //Бот
 public class Bot extends Player{
 
+    private final static int PAUSE = 700;
+
     public Bot(int hitPoint, Gun[] guns, String[] picture) {
         this("noname[БОТ]", hitPoint, guns, picture);
     }
@@ -17,10 +19,10 @@ public class Bot extends Player{
     //при случае добавить- если закончились патроны, выбрать другое оружие
     @Override
     public String nextCmd(Scanner sc) {
-        Util.sleep(1000);         //пауза
-        String str = "+";           //просто стреляем
+        Util.sleep(PAUSE);         //пауза
+        String str = Game.KEY_SHOOT;           //просто стреляем
         System.out.println(str);
-        Util.sleep(1000);
+        Util.sleep(PAUSE);
         return str;
     }
 
