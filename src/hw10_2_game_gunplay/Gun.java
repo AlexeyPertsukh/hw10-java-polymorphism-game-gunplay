@@ -5,15 +5,13 @@ public class Gun {
     public static final int CODE_NO_CARTRIDGES = -1;
     public static final int CODE_MISSED = 0;
 
-    private String name;
-    private int damageMin;
-    private int damageMax;
+    private final String name;
+    private final int damageMin;
+    private final int damageMax;
+    private final int percentageHit;    //процент попадания
+
     private int cartridge;        //количество единиц боеприпасоов
-    private int percentageHit;    //процент попадания
 
-    public Gun() {
-
-    }
     public Gun(String name, int damageMin, int damageMax, int cartridge, int percentageHit) {
        this.name = name;
        this.damageMin = damageMin;
@@ -44,15 +42,6 @@ public class Gun {
 
     public String info() {
         return String.format("%s, урон %d-%d, боеприпасы %d, вероятность попадания %d%% ", name, damageMin, damageMax, cartridge, percentageHit);
-    }
-
-
-    public void loadFrom(Gun gun) {
-        this.name = gun.name;
-        this.damageMin = gun.damageMin;
-        this.damageMax = gun.damageMax;
-        this.cartridge = gun.cartridge;
-        this.percentageHit = gun.percentageHit;
     }
 
     public String getName() {
