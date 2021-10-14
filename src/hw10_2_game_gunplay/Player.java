@@ -58,12 +58,6 @@ public class Player {
         return (0 >= hitPoint);
     }
 
-    public String getStrPictLine(int num) {
-        if(num < 0 || num >= picture.length) {
-            return "";
-        }
-        return picture[num];
-    }
 
     //строка - линия жизни
     public String getStrHpLine() {
@@ -86,22 +80,29 @@ public class Player {
     }
 
     //стреляем
-    public void shot(Player player) {
+    public int shot(Player player) {
         Gun gun = guns[gunType];
         int damage = gun.shot();
 
-        if(damage == Gun.NUM_NO_CARTRIDGES) {
-            System.out.println("Выстрел не произведен- нет боеприпасов.");
+        if(damage == Gun.CODE_NO_CARTRIDGES) {
+            return Gun.CODE_NO_CARTRIDGES;
+//
         }
-        else {
-            String str = (damage == 0) ? "не попал!" : String.format("противнику нанесен урон %d ед.", damage);
-            System.out.println(name + ", выстрел: " + str);
-            cntShot++;
-            if(damage == 0) {
-                cntMiss++;
-            }
+        cntShot++;
+
+        if(damage == 0) {
+            cntMiss++;
+            return Gun.CODE_MISSED;
         }
+
         player.inputDamage(damage);
+        return damage;
+
+//        else {
+////            String str = (damage == 0) ? "не попал!" : String.format("противнику нанесен урон %d ед.", damage);
+////            System.out.println(name + ", выстрел: " + str);
+//        }
+
     }
 
     //распечатываем все свои пушки

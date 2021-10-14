@@ -14,6 +14,7 @@ public class Game {
 
     private static final int MODE_PLAYER = 1;
     private static final int MODE_BOT = 2;
+    private static final int PAUSE = 3000;
 
     private Gun[] guns;
     private Player player1;
@@ -194,11 +195,7 @@ public class Game {
 
         //выстрел
         if (cmd.equalsIgnoreCase(KEY_SHOOT)) {
-
-            currentPlayer.shot(otherPlayer);
-            nextPlayer();
-            Util.sleep(3000);
-            printPage();
+            shoot();
             return;
         }
 
@@ -207,7 +204,7 @@ public class Game {
             otherPlayer.kill();
             nextPlayer();
             System.out.println(currentPlayer.getName() + " сражён наповал неизвестным оружием");
-            Util.sleep(2000);
+            Util.sleep(PAUSE);
             printPage();
             return;
         }
@@ -263,6 +260,27 @@ public class Game {
 
             System.out.println();
         }
+    }
+
+    private void shoot() {
+        int code = currentPlayer.shot(otherPlayer);
+        if(code == Gun.CODE_NO_CARTRIDGES) {
+            System.out.println("Выстрел не произведен- нет боеприпасов.");
+            return;
+        }
+
+        String str;
+        if(code == Gun.CODE_MISSED) {
+            str = "не попал!";
+        } else {
+            str = String.format("противнику нанесен урон %d ед.", code);
+        }
+
+        System.out.println(currentPlayer.getName() + ", выстрел: " + str);
+
+        nextPlayer();
+        Util.sleep(PAUSE);
+        printPage();
     }
 
 }

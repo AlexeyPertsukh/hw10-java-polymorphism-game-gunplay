@@ -2,7 +2,8 @@ package hw10_2_game_gunplay;
 
 public class Gun {
 
-    public static final int NUM_NO_CARTRIDGES = -1;
+    public static final int CODE_NO_CARTRIDGES = -1;
+    public static final int CODE_MISSED = 0;
 
     private String name;
     private int damageMin;
@@ -24,7 +25,7 @@ public class Gun {
     //сделать выстрел. Возвращает нанесенный урон или -1 если нет боеприпасов
     public int shot() {
         if(cartridge <= 0) { //Выстрел не произведен- нет боеприпасов
-            return NUM_NO_CARTRIDGES;
+            return CODE_NO_CARTRIDGES;
         }
 
         int damage = (int) (Math.random() * (damageMax - damageMin)) + damageMin;
