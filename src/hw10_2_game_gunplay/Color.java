@@ -1,6 +1,8 @@
+/*
+Цвета: http://surl.li/mrnv
+ */
 package hw10_2_game_gunplay;
-
-public class My {
+public class Color {
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
@@ -12,17 +14,16 @@ public class My {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
-    public static final String[] COLORS_FONT ={
-            ANSI_RESET,
-            ANSI_BLACK,
-            ANSI_RED,
-            ANSI_GREEN,
-            ANSI_YELLOW,
-            ANSI_BLUE,
-            ANSI_PURPLE,
-            ANSI_CYAN,
-            ANSI_WHITE
-    };
+    //BOLD
+    public static final String ANSI_BOLD_BLACK =    "\033[1;30m";  // BLACK
+    public static final String ANSI_BOLD_RED =      "\033[1;31m";    // RED
+    public static final String ANSI_BOLD_GREEN =    "\033[1;32m";  // GREEN
+    public static final String ANSI_BOLD_YELLOW =   "\033[1;33m"; // YELLOW
+    public static final String ANSI_BOLD_BLUE =     "\033[1;34m";   // BLUE
+    public static final String ANSI_BOLD_PURPLE =   "\033[1;35m"; // PURPLE
+    public static final String ANSI_BOLD_CYAN =     "\033[1;36m";   // CYAN
+    public static final String ANSI_BOLD_WHITE =    "\033[1;37m";  // WHITE
+
     //
     public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
     public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
@@ -32,29 +33,21 @@ public class My {
     public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+    //
 
-    public static final String[] COLORS_BACKGROUND ={
-
-            ANSI_BLACK_BACKGROUND,
-            ANSI_RED_BACKGROUND,
-            ANSI_GREEN_BACKGROUND,
-            ANSI_YELLOW_BACKGROUND,
-            ANSI_BLUE_BACKGROUND,
-            ANSI_PURPLE_BACKGROUND,
-            ANSI_CYAN_BACKGROUND,
-            ANSI_WHITE_BACKGROUND
-    };
-
-    private My(){
+    private Color(){
 
     }
 
     public static void printColor(String strPrint, String color){
-        System.out.print(color + strPrint + ANSI_RESET);
+        setTextColor(color);
+        System.out.print(strPrint);
+        resetTextColor();
     }
 
     public static void printlnColor(String strPrint, String color){
-        System.out.println(color + strPrint + ANSI_RESET);
+        printColor(strPrint, color);
+        System.out.println();
     }
 
     public static void printColorYellow(String strPrint) {
@@ -71,6 +64,12 @@ public class My {
         printlnColor(strPrint, ANSI_BLUE);
     }
 
+    public static void printColorPurple(String strPrint) {
+        printColor(strPrint, ANSI_PURPLE);
+    }
+    public static void printlnColorPurple(String strPrint) {
+        printlnColor(strPrint, ANSI_PURPLE);
+    }
 
     public static void printColorGreen(String strPrint) {
         printColor(strPrint, ANSI_GREEN);
@@ -93,35 +92,26 @@ public class My {
         printlnColor(strPrint, ANSI_BLACK);
     }
 
+    public static void printColorCyan(String strPrint) {
+        printColor(strPrint, ANSI_CYAN);
+    }
+    public static void printlnColorCyan(String strPrint) {
+        printlnColor(strPrint, ANSI_CYAN);
+    }
+
+    public static void printColorWhite(String strPrint) {
+        printColor(strPrint, ANSI_WHITE);
+    }
+    public static void printlnColorWhite(String strPrint) {
+        printlnColor(strPrint, ANSI_WHITE);
+    }
+
     public static void setTextColor(String color){
         System.out.print(color);
     }
 
-    public static void setTextColor(String colorFont, String colorBackgound){
-        System.out.print(colorFont + colorBackgound);
-    }
-
-
     public static void resetTextColor(){
         System.out.print(ANSI_RESET);
-    }
-
-    public static boolean isInteger(String str) {
-        try {
-            Integer.parseInt(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    //пауза
-    public static void sleep(int n){
-        try {
-            Thread.sleep(n);
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
     }
 
 }

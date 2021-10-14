@@ -4,13 +4,13 @@ import java.util.Scanner;
 
 public class Game {
 
-    private static final String VERSION = "ver.1.2";
+    private static final String VERSION = "ver.1.3";
     private static final String COLOR_FOCUS = Player.COLOR_FOCUS;
 
     private Gun[] guns;
     private Player[] players;
     private Player   player;
-    private Scanner sc;
+    private final Scanner sc;
     private int numPlayer;
     private boolean exit;
 
@@ -33,7 +33,7 @@ public class Game {
         do {
             System.out.print("Введите режим игры (1 - с человеком, 2 - с ботом): ");
             String str = sc.next();
-            if(My.isInteger(str)) {
+            if(Util.isInteger(str)) {
                 mode = Integer.parseInt(str);
             }
 
@@ -50,22 +50,22 @@ public class Game {
 
         firstPlayer();  //фокус на первого игрока
 
-        My.printlnColorRed(VERSION);
+        Color.printlnColorRed(VERSION);
         printPage();
 
         do {
-            My.printColorYellow(player.getName() + ", ваш ход. Введите команду:  ");
+            Color.printColorYellow(player.getName() + ", ваш ход. Введите команду:  ");
             cmd = player.nextCmd(sc);
-            inputCmd(cmd);
+            processCmd(cmd);
 
-            if(players[0].isKilled()) {
-                My.printlnColorRed(players[0].getName() + " был трагически застрелен 💀💀💀💀💀");
-                My.printlnColorGreen("Победил " + players[1].getName() + "!");
+            if(players[0].isDead()) {
+                Color.printlnColorRed(players[0].getName() + " был трагически застрелен 💀💀💀💀💀");
+                Color.printlnColorGreen("Победил " + players[1].getName() + "!");
                 exit = true;
             }
-            else if(players[1].isKilled()) {
-                My.printlnColorRed(players[1].getName() + " был трагически застрелен 💀💀💀💀💀");
-                My.printlnColorGreen("Победил " + players[0].getName() + "!");
+            else if(players[1].isDead()) {
+                Color.printlnColorRed(players[1].getName() + " был трагически застрелен 💀💀💀💀💀");
+                Color.printlnColorGreen("Победил " + players[0].getName() + "!");
                 exit = true;
             }
 
@@ -79,24 +79,22 @@ public class Game {
 
     private void addGun(String name, int damageMin, int damageMax, int cartridge, int percentageHit) {
         Gun[] tmp = new Gun[guns.length + 1];
-        for (int i = 0; i < guns.length; i++) {
-            tmp[i] = guns[i];
-        }
+        System.arraycopy(guns, 0, tmp, 0, guns.length);
         tmp[tmp.length - 1] = new Gun(name, damageMin, damageMax, cartridge, percentageHit);
         guns = tmp;
     }
 
     private void printHeader() {
-        My.printlnColorRed("-------------------------------------------------------------------------------------------");
-        My.printlnColorRed("           💀💀💀💀💀   КРОВАВАЯ ПЕРЕСТРЕЛКА   💀💀💀💀💀        ");
-        My.printlnColorRed("-------------------------------------------------------------------------------------------");
+        Color.printlnColorRed("-------------------------------------------------------------------------------------------");
+        Color.printlnColorRed("           💀💀💀💀💀   КРОВАВАЯ ПЕРЕСТРЕЛКА   💀💀💀💀💀        ");
+        Color.printlnColorRed("-------------------------------------------------------------------------------------------");
     }
 
     private void printFooter() {
-        My.printlnColorBlue(". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .");
+        Color.printlnColorBlue(". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .");
         String str = String.format("? справка     |  + сделать выстрел       |  1-%d сменить оружие       |   0 выход   ", player.getNumGuns());
-        My.printlnColorBlue(str);
-        My.printlnColorBlue(". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .");
+        Color.printlnColorBlue(str);
+        Color.printlnColorBlue(". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .");
         player.printGuns();
         System.out.println(". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .");
     }
@@ -105,15 +103,15 @@ public class Game {
     private void printPage() {
         printHeader();
 
-        String str1 = "";
-        String str2 = "";
-        String color1 = "";
-        String color2 = "";
+        String str1;
+        String str2;
+        String color1;
+        String color2;
 
         color1 = getColorPlayer(0);
         color2 = getColorPlayer(1);
-        My.printColor(String.format("%-12s   %-25s", "", players[0].getName()), color1);
-        My.printColor(String.format("  %-25s \n",  players[1].getName()), color2 );
+        Color.printColor(String.format("%-12s   %-25s", "", players[0].getName()), color1);
+        Color.printColor(String.format("  %-25s \n",  players[1].getName()), color2 );
 
         //распечатываем человечков
         int i = 0;
@@ -121,15 +119,15 @@ public class Game {
             str1 = players[0].getStrPictLine(i);
             str2 = players[1].getStrPictLine(i);
 
-            My.printColor(String.format("               %-15s", str1), color1);
-            My.printColor(String.format("            %-15s \n", str2), color2);
+            Color.printColor(String.format("               %-15s", str1), color1);
+            Color.printColor(String.format("            %-15s \n", str2), color2);
 
             i++;
         } while(str1.compareToIgnoreCase("") != 0);
 
         //дополнительная информация по игрокам
-        My.printColor(String.format("              %-15s", players[0].getStrHpLine()), color1);
-        My.printColor(String.format("              %-15s     \n", players[1].getStrHpLine()), color2);
+        Color.printColor(String.format("              %-15s", players[0].getStrHpLine()), color1);
+        Color.printColor(String.format("              %-15s     \n", players[1].getStrHpLine()), color2);
 
         System.out.printf("здоровье:     %-15d              %-15d     \n", players[0].getHitPoint(), players[1].getHitPoint());
         System.out.printf("выстрелил:    %-15d              %-15d     \n", players[0].getCntShot(), players[1].getCntShot());
@@ -141,25 +139,25 @@ public class Game {
     }
 
     private void printHelp() {
-        My.setTextColor(My.ANSI_BLUE);
+        Color.setTextColor(Color.ANSI_BLUE);
         System.out.println("-----");
         System.out.println("Бандитская перестрелка в зловещих подворотнях Запорожья");
         System.out.println("https://github.com/AlexeyPertsukh/hw10-java-polymorphism-game-gunplay");
         System.out.println("-----");
-        My.resetTextColor();
+        Color.resetTextColor();
     }
 
     private String getColorPlayer(int num) {
-        if(num == numPlayer && players[numPlayer].isKilled()) {
-            return My.ANSI_RED;
+        if(num == numPlayer && players[numPlayer].isDead()) {
+            return Color.ANSI_RED;
         }
-        return (num ==  numPlayer) ? COLOR_FOCUS : My.ANSI_RESET;
+        return (num ==  numPlayer) ? COLOR_FOCUS : Color.ANSI_RESET;
     }
 
     //команды
-    private void inputCmd(String cmd) {
+    private void processCmd(String cmd) {
         //цифры
-        if(My.isInteger(cmd)) {
+        if(Util.isInteger(cmd)) {
             int num = Integer.parseInt(cmd);
             //выход
             if(num == 0) {
@@ -191,7 +189,7 @@ public class Game {
             if (damage != Gun.NUM_NO_CARTRIDGES) { //делаем выстрел
                 nextPlayer();
                 player.inputDamage(damage);
-                My.sleep(3000);
+                Util.sleep(3000);
                 printPage();
             }
             return;
@@ -202,7 +200,7 @@ public class Game {
             nextPlayer();
             player.kill();
             System.out.println(player.getName() + " сражён наповал неизвестным оружием");
-            My.sleep(2000);
+            Util.sleep(2000);
             printPage();
             return;
         }

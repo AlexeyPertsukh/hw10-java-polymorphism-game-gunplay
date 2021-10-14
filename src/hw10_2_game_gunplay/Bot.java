@@ -16,10 +16,10 @@ public class Bot extends Player{
     //при случае добавить- если закончились патроны, выбрать другое оружие
     @Override
     public String nextCmd(Scanner sc) {
-        My.sleep(1000);         //пауза
+        Util.sleep(1000);         //пауза
         String str = "+";           //просто стреляем
         System.out.println(str);
-        My.sleep(1000);
+        Util.sleep(1000);
         return str;
     }
 

@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Player {
 
     public static int HP_MAX = 100;
-    public static final String COLOR_FOCUS = My.ANSI_YELLOW;
+    public static final String COLOR_FOCUS = Color.ANSI_YELLOW;
 
     public static final String[] ASCII_PICTURE_LEFT = {
             "( •_•)",
@@ -66,7 +66,7 @@ public class Player {
     }
 
     //живой?
-    public boolean isKilled() {
+    public boolean isDead() {
         return (0 >= hitPoint);
     }
 
@@ -129,7 +129,7 @@ public class Player {
     //распечатываем все свои пушки
     public void printGuns() {
         char ch = ' ';
-        String color = My.ANSI_RESET;
+        String color = Color.ANSI_RESET;
         System.out.println("Доступное оружие:");
         for (int i = 0; i < guns.length; i++) {
             if(gunType == i) {
@@ -138,9 +138,9 @@ public class Player {
             }
             else {
                 ch = ' ';
-                color = My.ANSI_RESET;
+                color = Color.ANSI_RESET;
             }
-            My.printColor(String.format("%c%d. %s   \n", ch, i + 1, guns[i].info()), color);
+            Color.printColor(String.format("%c%d. %s   \n", ch, i + 1, guns[i].info()), color);
         }
     }
 
