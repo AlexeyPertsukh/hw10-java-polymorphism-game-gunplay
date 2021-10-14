@@ -12,7 +12,7 @@ public class PictureStorage {
 
     public static final String[] ASCII_PICTURE_RIGHT = {
             "  (•_• ) ",
-            "¬--( v)  ",
+            "˥--( v)  ",
             "   /︶\\ ",
     };
 }
