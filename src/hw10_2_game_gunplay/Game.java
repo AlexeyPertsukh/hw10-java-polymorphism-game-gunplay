@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Game {
 
-    private static final String VERSION = "ver.1.61";
+    private static final String VERSION = "ver.1.7";
     private static final String COLOR_FOCUS = Color.ANSI_YELLOW;
     private static final String COLOR_DEAD = Color.ANSI_RED;
     private static final String COLOR_HELP = Color.ANSI_BLUE;
@@ -24,7 +24,6 @@ public class Game {
     private static final int MODE_PLAYER = 1;
     private static final int MODE_BOT = 2;
     private static final int PAUSE = 3000;
-
 
     private Player player1;
     private Player player2;
@@ -62,6 +61,7 @@ public class Game {
         System.out.println();
         System.out.println("I'll be back");
         System.out.println("JAVA A01 \"ШАГ\", Запорожье 2021");
+        System.out.println("Перцух Алексей");
     }
 
     private String inputCommand() {
