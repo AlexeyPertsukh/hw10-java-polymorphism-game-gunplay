@@ -18,7 +18,6 @@ public class Bot extends Player{
         Util.sleep(PAUSE);         //пауза
         String str = Game.KEY_SHOOT;           //просто стреляем
         System.out.println(str);
-        Util.sleep(PAUSE);
         return str;
     }
 

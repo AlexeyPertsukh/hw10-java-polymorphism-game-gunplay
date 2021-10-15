@@ -11,11 +11,10 @@ public class Game {
     private static final String COLOR_FOOTER = Color.ANSI_BLUE;
     private static final String COLOR_HEADER = Color.ANSI_RED;
 
-
     private static final char POINTER = '>';
 
-    private static final String NAME1 = "Игрок1";
-    private static final String NAME2 = "Игрок2";
+    private static final String NAME1 = "Саня Кирпич";
+    private static final String NAME2 = "Мишка Япончик";
     private static final String KEY_HELP = "?";
     public static final String KEY_SHOOT = "+";
     private static final String KEY_KILL = "#";
@@ -48,10 +47,10 @@ public class Game {
 
         while (true) {
             String command = inputCommand();
-            if(isExitGame(command)) {
+            if(isCommandExitGame(command)) {
                 break;
             }
-            processCmd(command);
+            processCommand(command);
 
             if (isWinGame()) {
                 printOnWin();
@@ -91,10 +90,10 @@ public class Game {
     }
 
     private Player getWinPlayer() {
-        if(isWinGame()) {
-            return (player1.isDead())? player2 : player1;
-        } else {
+        if (!isWinGame()) {
             return null;
+        } else {
+            return (player1.isDead())? player2 : player1;
         }
     }
 
@@ -117,7 +116,7 @@ public class Game {
     private void printFooter() {
         String text = String.format("%s справка     |  %s сделать выстрел       |  1-%d сменить оружие       |   %s выход   ", KEY_HELP,
                 KEY_SHOOT,
-                currentPlayer.getGunsSize(),
+                currentPlayer.sizeGuns(),
                 KEY_EXIT);
         Color.printlnColor(text, COLOR_FOOTER);
         Color.printlnColor(". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
@@ -141,7 +140,8 @@ public class Game {
         printPlayers();
 
         //дополнительная информация по игрокам
-        Color.printColor(String.format("%13s %-15s ", EMPTY_STR, player1.getStrHpLine()), color1);
+        Color.printColor(String.format("%13s %-15s", EMPTY_STR, player1.getStrHpLine()), color1);
+        System.out.printf("%1s", EMPTY_STR);
         Color.printColor(String.format("%13s %-15s \n", EMPTY_STR, player2.getStrHpLine()), color2);
 
         printItem("здоровье", player1.getHitPoint(), player2.getHitPoint());
@@ -182,20 +182,21 @@ public class Game {
     }
 
     private void printGunsByCurrentPlayer() {
-        Gun[] guns = currentPlayer.getGuns();
-        Gun currentGun = currentPlayer.getCurrentGun();
         char ch;
         String color;
+        Gun currentGun = currentPlayer.getCurrentGun();
+
         System.out.println("Доступное оружие:");
-        for (int i = 0; i < guns.length; i++) {
-            if (currentGun == guns[i]) {
+        for (int i = 0; i < currentPlayer.sizeGuns(); i++) {
+            Gun gun = currentPlayer.getGun(i);
+            if (currentGun == gun) {
                 ch = POINTER;
                 color = COLOR_FOCUS;
             } else {
                 ch = ' ';
                 color = Color.ANSI_RESET;
             }
-            String text = String.format("%c%d. %s   \n", ch, i + 1, guns[i].info());
+            String text = String.format("%c%d. %s   \n", ch, i + 1, gun.info());
             Color.printColor(text, color);
         }
 
@@ -224,7 +225,7 @@ public class Game {
     }
 
     //команды
-    private void processCmd(String cmd) {
+    private void processCommand(String cmd) {
         //цифры - выбор оружия
         if(Util.isInteger(cmd)) {
             int num = Integer.parseInt(cmd);
@@ -269,7 +270,7 @@ public class Game {
 
     private boolean changeGun(int num) {
         //сменить пушку
-        if (num > 0 && num < currentPlayer.getGunsSize() + 1) {
+        if (num > 0 && num < currentPlayer.sizeGuns() + 1) {
             if (currentPlayer.changeGun(num)) {
                 return true;
             } else {
@@ -302,7 +303,7 @@ public class Game {
         otherPlayer = player2;
     }
 
-    private boolean isExitGame(String cmd) {
+    private boolean isCommandExitGame(String cmd) {
         return cmd.equalsIgnoreCase(KEY_EXIT);
     }
 
@@ -311,7 +312,8 @@ public class Game {
         String color1 = getColorPlayer(player1);
         String color2 = getColorPlayer(player2);
 
-        Color.printColor(String.format("%-12s   %-25s", EMPTY_STR, player1.getName()), color1);
+        Color.printColor(String.format("%-11s   %-25s", EMPTY_STR, player1.getName()), color1);
+        System.out.printf("%3s", EMPTY_STR);
         Color.printColor(String.format("  %-25s \n",  player2.getName()), color2 );
 
         String[] pic1 = player1.getPicture();
@@ -342,14 +344,13 @@ public class Game {
             return false;
         }
 
-        String str;
+        String shootResult;
         if(code == Gun.CODE_MISSED) {
-            str = "не попал!";
+            shootResult = "не попал!";
         } else {
-            str = String.format("противнику нанесен урон %d ед.", code);
+            shootResult = String.format("противнику нанесен урон %d ед.", code);
         }
-
-        System.out.println(currentPlayer.getName() + ", выстрел: " + str);
+        System.out.printf("%s, выстрел(%s): %s \n", currentPlayer.getName(), currentPlayer.getGunNameLowerCase(), shootResult);
         return true;
     }
 

@@ -104,7 +104,7 @@ public class Player {
     }
 
     //количество пушек
-    public int getGunsSize() {
+    public int sizeGuns() {
         return guns.length;
     }
 
@@ -136,12 +136,20 @@ public class Player {
         return picture;
     }
 
-    public Gun[] getGuns() {
-        return guns;
-    }
-
     public Gun getCurrentGun() {
         return currentGun;
+    }
+
+    public String getGunName() {
+        return currentGun.getName();
+    }
+
+    public String getGunNameLowerCase() {
+        return getGunName().toLowerCase();
+    }
+
+    public Gun getGun(int num) {
+        return guns[num];
     }
 
 }
