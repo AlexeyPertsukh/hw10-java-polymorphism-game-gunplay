@@ -145,7 +145,7 @@ public class Game {
         Color.printColor(String.format("%13s %-15s \n", EMPTY_STR, player2.getStrHpLine()), color2);
 
         printItem("здоровье", player1.getHitPoint(), player2.getHitPoint());
-        printItem("выстрелил", player1.getCntShot(), player2.getCntHit());
+        printItem("выстрелил", player1.getCntShot(), player2.getCntShot());
         printItem("попал", player1.getCntHit(), player2.getCntHit());
         printItem("промазал", player1.getCntMiss(), player2.getCntMiss());
         printItem("оружие", player1.nameGun(), player2.nameGun());
