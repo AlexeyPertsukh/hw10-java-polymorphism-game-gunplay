@@ -13,7 +13,8 @@ public class Player {
     private final String name;
     private int hitPoint;
     private int cntShot;        //счетчик выстрелов
-    private int cntMiss;        //счетчик промахоа
+    private int cntHit;        //счетчик попаданий
+    private int cntMiss;        //счетчик промахов
     private final String[] picture;
 
     public Player(String name, int hitPoint, Gun[] guns, String[] picture) {
@@ -82,6 +83,8 @@ public class Player {
         if (damage == Gun.CODE_MISSED) {
             cntMiss++;
             return Gun.CODE_MISSED;
+        } else {
+            cntHit++;
         }
 
         player.inputDamage(damage);
@@ -122,6 +125,10 @@ public class Player {
 
     public int getCntMiss() {
         return cntMiss;
+    }
+
+    public int getCntHit() {
+        return cntHit;
     }
 
     public String getName() {

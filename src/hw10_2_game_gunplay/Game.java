@@ -145,7 +145,8 @@ public class Game {
         Color.printColor(String.format("%13s %-15s \n", EMPTY_STR, player2.getStrHpLine()), color2);
 
         printItem("здоровье", player1.getHitPoint(), player2.getHitPoint());
-        printItem("выстрелил", player1.getCntShot(), player2.getCntShot());
+        printItem("выстрелил", player1.getCntShot(), player2.getCntHit());
+        printItem("попал", player1.getCntHit(), player2.getCntHit());
         printItem("промазал", player1.getCntMiss(), player2.getCntMiss());
         printItem("оружие", player1.nameGun(), player2.nameGun());
         printItem(EMPTY_STR, player1.shortGunInfo(), player2.shortGunInfo());
@@ -357,8 +358,8 @@ public class Game {
     private Gun[] createGuns() {
         return new Gun[]{
                 new Gun("Наган", 10, 30, 20, 80),
-                new Gun("Обрез", 40, 60, 10, 50),
-                new Gun("Граната", 60, 85, 4, 20)
+                new Gun("Обрез", 30, 50, 10, 50),
+                new Gun("Граната", 50, 85, 4, 20)
         };
     }
 
