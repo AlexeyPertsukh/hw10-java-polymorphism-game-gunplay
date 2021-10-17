@@ -248,10 +248,12 @@ public class Game {
 
         //выстрел
         if (cmd.equalsIgnoreCase(KEY_SHOOT)) {
+            if(currentPlayer instanceof Bot) {
+                System.out.println(KEY_SHOOT);
+            }
             if(shoot()) {
+                pressEnterOrPauseAfterShoot();
                 nextPlayer();
-                System.out.println("пауза...");
-                Util.sleep(PAUSE);
                 printPage();
             }
             return;
@@ -261,9 +263,7 @@ public class Game {
         if(cmd.equalsIgnoreCase(KEY_KILL)) {
             otherPlayer.kill();
             System.out.println(otherPlayer.getName() + " сражён наповал таинственным оружием");
-            System.out.println("пауза...");
-            Util.sleep(PAUSE);
-//            nextPlayer();
+            pressEnterOrPauseAfterShoot();
             printPage();
             return;
         }
@@ -338,6 +338,15 @@ public class Game {
             Color.printColor(str2, color2);
 
             System.out.println();
+        }
+    }
+
+    private void pressEnterOrPauseAfterShoot() {
+        if (currentPlayer instanceof Bot) {
+            System.out.println("пауза...");
+            Util.sleep(PAUSE);
+        } else {
+            Util.pressEnterForContinue();
         }
     }
 

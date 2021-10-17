@@ -40,4 +40,13 @@ public class Util {
         }
     }
 
+    public static void pressEnterForContinue() {
+        System.out.println("...");
+        System.out.print("для продолжения нажмите <enter>");
+        //не выносить инициализацию этого сканера отсюда, не передавать на вход метода!
+        //постоянно пересоздаем сканнер в этом методе из-за глюков при переводе фокуса ввода(курсора) из консоли в код и обратно
+        Scanner sc = new Scanner(System.in);
+        sc.nextLine();
+    }
+
 }
