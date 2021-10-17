@@ -23,7 +23,7 @@ public class Game {
 
     private static final int MODE_PLAYER = 1;
     private static final int MODE_BOT = 2;
-    private static final int PAUSE = 3000;
+    private static final int PAUSE_AFTER_SHOOT_BOT = 3000;
 
     private Player player1;
     private Player player2;
@@ -344,7 +344,7 @@ public class Game {
     private void pressEnterOrPauseAfterShoot() {
         if (currentPlayer instanceof Bot) {
             System.out.println("пауза...");
-            Util.sleep(PAUSE);
+            Util.sleep(PAUSE_AFTER_SHOOT_BOT);
         } else {
             Util.pressEnterForContinue();
         }

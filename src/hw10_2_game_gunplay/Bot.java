@@ -5,7 +5,7 @@ import java.util.Scanner;
 //Бот
 public class Bot extends Player{
 
-    private final static int PAUSE = 900;
+    private final static int PAUSE = 1000;
 
     public Bot(String name, int hitPoint, Gun[] guns, String[] picture) {
         super( name + "[БОТ]", hitPoint, guns, picture);
