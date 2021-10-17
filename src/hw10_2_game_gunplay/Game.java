@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Game {
 
-    private static final String VERSION = "ver.1.7";
+    private static final String VERSION = "ver.1.8";
     private static final String COLOR_FOCUS = Color.ANSI_YELLOW;
     private static final String COLOR_DEAD = Color.ANSI_RED;
     private static final String COLOR_HELP = Color.ANSI_BLUE;
@@ -205,12 +205,15 @@ public class Game {
 
     private void printHelp() {
         Color.setTextColor(COLOR_HELP);
-        System.out.println("-----");
+        System.out.println("---");
         System.out.println("Бандитская перестрелка в зловещих подворотнях Запорожья");
         System.out.println("Чит-код убить контрагента сразу: " + KEY_KILL);
+        System.out.println();
         System.out.println("https://github.com/AlexeyPertsukh/hw10-java-polymorphism-game-gunplay");
-        System.out.println("-----");
+        System.out.println("---");
+        System.out.println();
         Color.resetTextColor();
+
     }
 
     private void printOnWin() {
