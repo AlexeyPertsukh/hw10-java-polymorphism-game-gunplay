@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Game {
 
-    private static final String VERSION = "ver.1.8";
+    private static final String VERSION = "ver.1.9";
     private static final String COLOR_FOCUS = Color.ANSI_YELLOW;
     private static final String COLOR_DEAD = Color.ANSI_RED;
     private static final String COLOR_HELP = Color.ANSI_BLUE;
@@ -252,7 +252,7 @@ public class Game {
                 System.out.println(KEY_SHOOT);
             }
             if(shoot()) {
-                pressEnterOrPauseAfterShoot();
+                Util.pressEnterForContinue();
                 nextPlayer();
                 printPage();
             }
@@ -263,7 +263,7 @@ public class Game {
         if(cmd.equalsIgnoreCase(KEY_KILL)) {
             otherPlayer.kill();
             System.out.println(otherPlayer.getName() + " сражён наповал таинственным оружием");
-            pressEnterOrPauseAfterShoot();
+            Util.pressEnterForContinue();
             printPage();
             return;
         }
@@ -338,15 +338,6 @@ public class Game {
             Color.printColor(str2, color2);
 
             System.out.println();
-        }
-    }
-
-    private void pressEnterOrPauseAfterShoot() {
-        if (currentPlayer instanceof Bot) {
-            System.out.println("пауза...");
-            Util.sleep(PAUSE_AFTER_SHOOT_BOT);
-        } else {
-            Util.pressEnterForContinue();
         }
     }
 
