@@ -32,9 +32,6 @@ public class Player {
 
     //получить повреждение
     public void inputDamage(int damage) {
-        if (damage < 0) {    //если прилетит отрицательный урон- это глюк, здоровье не увеличиваем
-            damage = 0;
-        }
         hitPoint -= damage;
         if (hitPoint < 0) {
             hitPoint = 0;
