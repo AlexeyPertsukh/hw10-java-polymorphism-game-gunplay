@@ -360,7 +360,7 @@ public class Game {
     private Gun[] createGuns() {
         return new Gun[]{
                 new Gun("Наган", 10, 30, 20, 80),
-                new Gun("Обрез", 30, 50, 10, 50),
+                new Gun("Обрез", 25, 45, 10, 40),
                 new Gun("Граната", 50, 85, 4, 20)
         };
     }
