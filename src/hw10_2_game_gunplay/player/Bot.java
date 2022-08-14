@@ -6,8 +6,8 @@ import hw10_2_game_gunplay.gun.Gun;
 //Бот
 public class Bot extends Player {
 
-    public Bot(String name, Gun[] guns, String[] picture) {
-        super(name, guns, picture);
+    public Bot(String name, Gun[] guns) {
+        super(name, guns);
     }
 
     //бот стреляет

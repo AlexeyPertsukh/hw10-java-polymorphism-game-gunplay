@@ -13,12 +13,10 @@ public class Player {
     private int shotCount;        //счетчик выстрелов
     private int hitCount;        //счетчик попаданий
     private int missCount;        //счетчик промахов
-    private final String[] picture;
 
-    public Player(String name, Gun[] guns, String[] picture) {
+    public Player(String name, Gun[] guns) {
         this.name = name;
         this.guns = guns;
-        this.picture = picture;
 
         currentGun = guns[0];
     }
@@ -99,10 +97,6 @@ public class Player {
 
     public int getHitPoint() {
         return hitPoint;
-    }
-
-    public String[] getPicture() {
-        return picture;
     }
 
     public Gun getCurrentGun() {

@@ -5,6 +5,7 @@ import hw10_2_game_gunplay.player.Bot;
 import hw10_2_game_gunplay.player.Player;
 import hw10_2_game_gunplay.util.Color;
 import hw10_2_game_gunplay.util.Help;
+import hw10_2_game_gunplay.util.PictureStorage;
 import hw10_2_game_gunplay.util.Util;
 
 import java.util.Scanner;
@@ -292,8 +293,8 @@ public class Game {
         System.out.printf("%3s", EMPTY_STR);
         Color.printColor(String.format("  %-25s \n", player2.getName()), color2);
 
-        String[] picture1 = player1.getPicture();
-        String[] picture2 = player2.getPicture();
+        String[] picture1 = PictureStorage.ASCII_PICTURE_LEFT;
+        String[] picture2 = PictureStorage.ASCII_PICTURE_RIGHT;
 
         int max = Math.max(picture1.length, picture2.length);
         String pictureLine1;
