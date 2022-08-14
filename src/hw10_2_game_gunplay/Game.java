@@ -3,48 +3,41 @@ package hw10_2_game_gunplay;
 import hw10_2_game_gunplay.player.Bot;
 import hw10_2_game_gunplay.player.Player;
 import hw10_2_game_gunplay.util.Color;
-import hw10_2_game_gunplay.util.PictureStorage;
+import hw10_2_game_gunplay.util.Help;
 import hw10_2_game_gunplay.util.Util;
 
 import java.util.Scanner;
 
 public class Game {
 
-    private static final String VERSION = "ver.1.9";
+    private static final String VERSION = "ver.2.0";
     private static final String COLOR_FOCUS = Color.ANSI_YELLOW;
     private static final String COLOR_DEAD = Color.ANSI_RED;
-    private static final String COLOR_HELP = Color.ANSI_BLUE;
+    public static final String COLOR_HELP = Color.ANSI_BLUE;
     private static final String COLOR_FOOTER = Color.ANSI_BLUE;
     private static final String COLOR_HEADER = Color.ANSI_RED;
 
     private static final char POINTER = '>';
 
-    private static final String NAME1 = "Саня Кирпич";
-    private static final String NAME2 = "Мишка Япончик";
     private static final String KEY_HELP = "?";
     public static final String KEY_SHOOT = "+";
-    private static final String KEY_KILL = "#";
+    public static final String KEY_KILL = "#";
     private static final String KEY_EXIT = "END";
     private static final String EMPTY_STR = "";
-
-    private static final int MODE_PLAYER = 1;
-    private static final int MODE_BOT = 2;
     private static final int PAUSE_ON_BOT_SHOT = 1000;
 
-    private Player player1;
-    private Player player2;
+    private final Player player1;
+    private final Player player2;
     private Player currentPlayer;
-    private Player otherPlayer;
-    private final Scanner sc;
+    private final Scanner sc = new Scanner(System.in);
 
-    public Game() {
-        sc = new Scanner(System.in);
+    public Game(Player player1, Player player2) {
+        this.player1 = player1;
+        this.player2 = player2;
     }
 
     //========== основной блок ==================
     public void go() {
-        int mode = inputGameMode();
-        initPlayers(mode);
         firstPlayer();  //фокус на первого игрока
 
         Color.printlnColorRed(VERSION);
@@ -52,7 +45,7 @@ public class Game {
 
         while (true) {
             String command = inputCommand();
-            if(isCommandExitGame(command)) {
+            if (isCommandExitGame(command)) {
                 break;
             }
             processCommand(command);
@@ -70,9 +63,13 @@ public class Game {
         System.out.println("Перцух Алексей");
     }
 
+    private Player otherPlayer() {
+        return currentPlayer == player1 ? player2 : player1;
+    }
+
     private String inputCommand() {
         Color.printColorYellow(currentPlayer.getName() + ", ваш ход. Введите команду:  ");
-        if(currentPlayer instanceof Bot) {
+        if (currentPlayer instanceof Bot) {
             Util.sleep(PAUSE_ON_BOT_SHOT);
             return ((Bot) currentPlayer).getCommand();
         }
@@ -80,21 +77,6 @@ public class Game {
         return sc.next();
     }
     //============================================
-
-    private void initPlayers(int mode) {
-        player1 = new Player(NAME1, Player.HP_MAX, createGuns(), PictureStorage.ASCII_PICTURE_LEFT);
-        if(mode == MODE_PLAYER) {
-            player2 = new Player(NAME2, Player.HP_MAX, createGuns(), PictureStorage.ASCII_PICTURE_RIGHT);    //второму- больше патронов
-        }
-        else {
-            player2 = new Bot(NAME2, Player.HP_MAX, createGuns(), PictureStorage.ASCII_PICTURE_RIGHT);
-        }
-    }
-
-    private int inputGameMode() {
-        String text = String.format("Введите режим игры (%d - с человеком, %d - с ботом): ", MODE_PLAYER, MODE_BOT);
-        return Util.nextInt(text, MODE_PLAYER, MODE_BOT);
-    }
 
     private boolean isWinGame() {
         return player1.isDead() || player2.isDead();
@@ -104,13 +86,13 @@ public class Game {
         if (!isWinGame()) {
             return null;
         } else {
-            return (player1.isDead())? player2 : player1;
+            return (player1.isDead()) ? player2 : player1;
         }
     }
 
     private Player getDeadPlayer() {
-        if(isWinGame()) {
-            return (player1.isDead())? player1 : player2;
+        if (isWinGame()) {
+            return (player1.isDead()) ? player1 : player2;
         } else {
             return null;
         }
@@ -127,13 +109,13 @@ public class Game {
     private void printFooter() {
         String text = String.format("%s справка     |  %s сделать выстрел       |  1-%d сменить оружие       |   %s выход   ", KEY_HELP,
                 KEY_SHOOT,
-                currentPlayer.sizeGuns(),
+                currentPlayer.gunCount(),
                 KEY_EXIT);
         Color.printlnColor(text, COLOR_FOOTER);
         Color.printlnColor(". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
                 COLOR_FOOTER);
 
-        printGunsByCurrentPlayer();
+        printCurrentPlayerGuns();
         System.out.println();
     }
 
@@ -151,16 +133,19 @@ public class Game {
         printPlayers();
 
         //дополнительная информация по игрокам
-        Color.printColor(String.format("%13s %-15s", EMPTY_STR, player1.getStrHpLine()), color1);
+        Color.printColor(String.format("%13s %-15s", EMPTY_STR, lineHitPoints(player1)), color1);
         System.out.printf("%1s", EMPTY_STR);
-        Color.printColor(String.format("%13s %-15s \n", EMPTY_STR, player2.getStrHpLine()), color2);
+        Color.printColor(String.format("%13s %-15s \n", EMPTY_STR, lineHitPoints(player2)), color2);
 
         printItem("здоровье", player1.getHitPoint(), player2.getHitPoint());
-        printItem("выстрелил", player1.getCntShot(), player2.getCntShot());
-        printItem("попал", player1.getCntHit(), player2.getCntHit());
-        printItem("промазал", player1.getCntMiss(), player2.getCntMiss());
-        printItem("оружие", player1.nameGun(), player2.nameGun());
-        printItem(EMPTY_STR, player1.shortGunInfo(), player2.shortGunInfo());
+        printItem("выстрелил", player1.getShotCount(), player2.getShotCount());
+        printItem("попал", player1.getHitCount(), player2.getHitCount());
+        printItem("промазал", player1.getMissCount(), player2.getMissCount());
+        printItem("оружие", player1.getCurrentGunName(), player2.getCurrentGunName());
+
+        String shortInfoPlayer1 = "(" + player1.shortCurrentGunInfo() + ")";
+        String shortInfoPlayer2 = "(" + player2.shortCurrentGunInfo() + ")";
+        printItem(EMPTY_STR, shortInfoPlayer1, shortInfoPlayer2);
 
         Color.printlnColor(". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .", COLOR_FOOTER);
 
@@ -175,7 +160,7 @@ public class Game {
     }
 
     private void printItem(String nameItem, String item1, String item2) {
-        if(!nameItem.equalsIgnoreCase(EMPTY_STR)) {
+        if (!nameItem.equalsIgnoreCase(EMPTY_STR)) {
             nameItem += ":";
         }
 
@@ -187,20 +172,20 @@ public class Game {
 
         System.out.print(nameItem);
         Color.printColor(item1, getColorPlayer(player1));
-        System.out.printf("%12s",EMPTY_STR);
+        System.out.printf("%12s", EMPTY_STR);
         Color.printColor(item2, getColorPlayer(player2));
         System.out.println();
 
     }
 
-    private void printGunsByCurrentPlayer() {
+    private void printCurrentPlayerGuns() {
         char ch;
         String color;
         Gun currentGun = currentPlayer.getCurrentGun();
 
         System.out.println("Доступное оружие:");
-        for (int i = 0; i < currentPlayer.sizeGuns(); i++) {
-            Gun gun = currentPlayer.getGun(i);
+        for (int i = 0; i < currentPlayer.gunCount(); i++) {
+            Gun gun = currentPlayer.getGunByNum(i);
             if (currentGun == gun) {
                 ch = POINTER;
                 color = COLOR_FOCUS;
@@ -214,37 +199,24 @@ public class Game {
 
     }
 
-    private void printHelp() {
-        Color.setTextColor(COLOR_HELP);
-        System.out.println("---");
-        System.out.println("Бандитская перестрелка в зловещих подворотнях Запорожья");
-        System.out.println("Чит-код убить контрагента сразу: " + KEY_KILL);
-        System.out.println();
-        System.out.println("https://github.com/AlexeyPertsukh/hw10-java-polymorphism-game-gunplay");
-        System.out.println("---");
-        System.out.println();
-        Color.resetTextColor();
-
-    }
-
     private void printOnWin() {
         Color.printlnColorRed(getDeadPlayer().getName() + " был трагически застрелен 💀💀💀💀💀");
         Color.printlnColorGreen("Победил " + getWinPlayer().getName() + "!");
     }
 
     private String getColorPlayer(Player player) {
-        if(player.isDead()) {
+        if (player.isDead()) {
             return COLOR_DEAD;
         }
-        return (player ==  currentPlayer) ? COLOR_FOCUS : Color.ANSI_RESET;
+        return (player == currentPlayer) ? COLOR_FOCUS : Color.ANSI_RESET;
     }
 
     //команды
-    private void processCommand(String cmd) {
+    private void processCommand(String command) {
         //цифры - выбор оружия
-        if(Util.isInteger(cmd)) {
-            int num = Integer.parseInt(cmd);
-            if(changeGun(num)) {
+        if (Util.isInteger(command)) {
+            int num = Integer.parseInt(command);
+            if (changeGun(num)) {
                 printPage();
             } else {
                 System.out.println("Неправильный номер оружия");
@@ -252,17 +224,17 @@ public class Game {
             return;
         }
 
-        if(cmd.equalsIgnoreCase(KEY_HELP)) {
-            printHelp();
+        if (command.equalsIgnoreCase(KEY_HELP)) {
+            Help.print();
             return;
         }
 
         //выстрел
-        if (cmd.equalsIgnoreCase(KEY_SHOOT)) {
-            if(currentPlayer instanceof Bot) {
+        if (command.equalsIgnoreCase(KEY_SHOOT)) {
+            if (currentPlayer instanceof Bot) {
                 System.out.println(KEY_SHOOT);
             }
-            if(shoot()) {
+            if (shoot()) {
                 Util.pressEnterForContinue();
                 nextPlayer();
                 printPage();
@@ -271,9 +243,9 @@ public class Game {
         }
 
         //чит - завалить противника наповал
-        if(cmd.equalsIgnoreCase(KEY_KILL)) {
-            otherPlayer.kill();
-            System.out.println(otherPlayer.getName() + " сражён наповал таинственным оружием");
+        if (command.equalsIgnoreCase(KEY_KILL)) {
+            otherPlayer().kill();
+            System.out.println(otherPlayer().getName() + " сражён наповал таинственным оружием");
             Util.pressEnterForContinue();
             printPage();
             return;
@@ -285,7 +257,7 @@ public class Game {
 
     private boolean changeGun(int num) {
         //сменить пушку
-        if (num > 0 && num < currentPlayer.sizeGuns() + 1) {
+        if (num > 0 && num < currentPlayer.gunCount() + 1) {
             if (currentPlayer.changeGun(num)) {
                 return true;
             } else {
@@ -298,24 +270,16 @@ public class Game {
 
     //меняем игрока
     private void nextPlayer() {
-        if(otherPlayer.isDead()) {
+        if (otherPlayer().isDead()) {
             return;
         }
 
-        if(currentPlayer == player1) {
-            currentPlayer = player2;
-            otherPlayer = player1;
-        } else {
-            currentPlayer = player1;
-            otherPlayer = player2;
-        }
-
+        currentPlayer = (currentPlayer == player1) ? player2 : player1;
     }
 
     //устанавливаем первого игрока
     private void firstPlayer() {
         currentPlayer = player1;
-        otherPlayer = player2;
     }
 
     private boolean isCommandExitGame(String cmd) {
@@ -329,52 +293,66 @@ public class Game {
 
         Color.printColor(String.format("%-11s   %-25s", EMPTY_STR, player1.getName()), color1);
         System.out.printf("%3s", EMPTY_STR);
-        Color.printColor(String.format("  %-25s \n",  player2.getName()), color2 );
+        Color.printColor(String.format("  %-25s \n", player2.getName()), color2);
 
-        String[] pic1 = player1.getPicture();
-        String[] pic2 = player2.getPicture();
+        String[] picture1 = player1.getPicture();
+        String[] picture2 = player2.getPicture();
 
-        int max = Math.max(pic1.length, pic2.length);
-        String str1;
-        String str2;
+        int max = Math.max(picture1.length, picture2.length);
+        String pictureLine1;
+        String pictureLine2;
         for (int i = 0; i < max; i++) {
-            System.out.printf("%14s",EMPTY_STR);
+            System.out.printf("%14s", EMPTY_STR);
 
-            str1 = String.format("%-10s", pic1[i]);
-            Color.printColor(str1, color1);
+            pictureLine1 = String.format("%-10s", picture1[i]);
+            Color.printColor(pictureLine1, color1);
 
-            System.out.printf("%19s",EMPTY_STR);
+            System.out.printf("%19s", EMPTY_STR);
 
-            str2 = String.format("%-10s", pic2[i]);
-            Color.printColor(str2, color2);
+            pictureLine2 = String.format("%-10s", picture2[i]);
+            Color.printColor(pictureLine2, color2);
 
             System.out.println();
         }
     }
 
     private boolean shoot() {
-        int code = currentPlayer.shot(otherPlayer);
-        if(code == Gun.CODE_NO_CARTRIDGES) {
+        int code = currentPlayer.shot(otherPlayer());
+        if (code == Gun.CODE_NO_CARTRIDGES) {
             System.out.println("Выстрел не произведен- нет боеприпасов.");
             return false;
         }
 
         String shootResult;
-        if(code == Gun.CODE_MISSED) {
+        if (code == Gun.CODE_MISSED) {
             shootResult = "не попал!";
         } else {
             shootResult = String.format("противнику нанесен урон %d ед.", code);
         }
-        System.out.printf("%s, выстрел(%s): %s \n", currentPlayer.getName(), currentPlayer.getGunNameLowerCase(), shootResult);
+        System.out.printf("%s, выстрел(%s): %s \n", currentPlayer.getName(), currentPlayer.getCurrentGunName().toLowerCase(), shootResult);
         return true;
     }
 
-    private static Gun[] createGuns() {
-        return new Gun[]{
-                new Gun("Наган", 15, 30, 20, 80),
-                new Gun("Обрез", 30, 45, 10, 50),
-                new Gun("Граната", 50, 85, 4, 20)
-        };
+    //строка - линия жизни
+    public String lineHitPoints(Player player) {
+        final int count = 10;
+        StringBuilder builder = new StringBuilder();
+        int hitPoint = player.getHitPoint();
+
+        int n = (hitPoint * count) / Player.HP_MAX;
+        if (hitPoint > 0 && n == 0) {    //даже если жизни совсем чуть-чуть, рисуем одну палку жизни
+            n = 1;
+        }
+
+        for (int i = 0; i < count; i++) {
+            if (n > i) {
+                builder.append("+");
+            } else {
+                builder.append("-");
+            }
+        }
+
+        return builder.toString();
     }
 
 }

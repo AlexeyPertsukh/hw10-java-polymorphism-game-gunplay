@@ -15,22 +15,22 @@ public class Gun {
     private int cartridge;        //количество единиц боеприпасоов
 
     public Gun(String name, int damageMin, int damageMax, int cartridge, int chance) {
-       this.name = name;
-       this.damageMin = damageMin;
-       this.damageMax = damageMax;
-       this.cartridge = cartridge;
-       this.chance = chance;
+        this.name = name;
+        this.damageMin = damageMin;
+        this.damageMax = damageMax;
+        this.cartridge = cartridge;
+        this.chance = chance;
     }
 
     //сделать выстрел. Возвращает нанесенный урон или -1 если нет боеприпасов
     public int shot() {
-        if(cartridge <= 0) { //Выстрел не произведен- нет боеприпасов
+        if (cartridge <= 0) { //Выстрел не произведен- нет боеприпасов
             return CODE_NO_CARTRIDGES;
         }
         cartridge--;
 
         int random = Util.randomInt(100);
-        if( random > chance) {   //промахнулся?
+        if (random > chance) {   //промахнулся?
             return CODE_MISSED;
         }
 
@@ -38,7 +38,7 @@ public class Gun {
     }
 
     public String shortInfo() {
-        return String.format("(%d-%d, %d, %d%%)", damageMin, damageMax, cartridge, chance);
+        return String.format("%d-%d, %d, %d%%", damageMin, damageMax, cartridge, chance);
     }
 
     public String info() {
@@ -48,6 +48,5 @@ public class Gun {
     public String getName() {
         return name;
     }
-
 
 }

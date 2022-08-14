@@ -4,29 +4,27 @@ import hw10_2_game_gunplay.Gun;
 
 //Игрок
 public class Player {
-
     public static int HP_MAX = 100;
-    public static final int NUM_FIRST_GUN = 1;
 
     private final Gun[] guns;
     private Gun currentGun;
     private final String name;
-    private int hitPoint;
-    private int cntShot;        //счетчик выстрелов
-    private int cntHit;        //счетчик попаданий
-    private int cntMiss;        //счетчик промахов
+    private int hitPoint = HP_MAX;
+    private int shotCount;        //счетчик выстрелов
+    private int hitCount;        //счетчик попаданий
+    private int missCount;        //счетчик промахов
     private final String[] picture;
 
-    public Player(String name, int hitPoint, Gun[] guns, String[] picture) {
+    public Player(String name, Gun[] guns, String[] picture) {
         this.name = name;
-        this.hitPoint = hitPoint;
-        this.picture = picture;
         this.guns = guns;
-        setFirstGun();
+        this.picture = picture;
+
+        currentGun = guns[0];
     }
 
     //получить повреждение
-    public void inputDamage(int damage) {
+    public void subtractHitPoints(int damage) {
         hitPoint -= damage;
         if (hitPoint < 0) {
             hitPoint = 0;
@@ -43,43 +41,23 @@ public class Player {
         return (0 >= hitPoint);
     }
 
-
-    //строка - линия жизни
-    public String getStrHpLine() {
-        StringBuilder str = new StringBuilder();
-        int n = (hitPoint * 10) / HP_MAX;
-        if (hitPoint > 0 && n == 0) {    //даже если жизни совсем чуть-чуть, рисуем одну палку жизни
-            n = 1;
-        }
-
-        for (int i = 0; i < 10; i++) {
-            if (n > i) {
-                str.append("+");
-            } else {
-                str.append("-");
-            }
-        }
-
-        return str.toString();
-    }
-
     //стреляем
-    public int shot(Player player) {
+    public int shot(Player enemy) {
         int damage = currentGun.shot();
 
         if (damage == Gun.CODE_NO_CARTRIDGES) {
             return Gun.CODE_NO_CARTRIDGES;
         }
-        cntShot++;
+        shotCount++;
 
         if (damage == Gun.CODE_MISSED) {
-            cntMiss++;
+            missCount++;
             return Gun.CODE_MISSED;
         } else {
-            cntHit++;
+            hitCount++;
         }
 
-        player.inputDamage(damage);
+        enemy.subtractHitPoints(damage);
         return damage;
 
     }
@@ -94,33 +72,25 @@ public class Player {
         return true;
     }
 
-    private void setFirstGun() {
-        changeGun(NUM_FIRST_GUN);
-    }
-
     //количество пушек
-    public int sizeGuns() {
+    public int gunCount() {
         return guns.length;
     }
 
-    public String nameGun() {
-        return currentGun.getName();
-    }
-
-    public String shortGunInfo() {
+    public String shortCurrentGunInfo() {
         return currentGun.shortInfo();
     }
 
-    public int getCntShot() {
-        return cntShot;
+    public int getShotCount() {
+        return shotCount;
     }
 
-    public int getCntMiss() {
-        return cntMiss;
+    public int getMissCount() {
+        return missCount;
     }
 
-    public int getCntHit() {
-        return cntHit;
+    public int getHitCount() {
+        return hitCount;
     }
 
     public String getName() {
@@ -139,15 +109,11 @@ public class Player {
         return currentGun;
     }
 
-    public String getGunName() {
+    public String getCurrentGunName() {
         return currentGun.getName();
     }
 
-    public String getGunNameLowerCase() {
-        return getGunName().toLowerCase();
-    }
-
-    public Gun getGun(int num) {
+    public Gun getGunByNum(int num) {
         return guns[num];
     }
 
