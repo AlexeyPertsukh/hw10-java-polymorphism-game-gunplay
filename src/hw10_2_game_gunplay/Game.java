@@ -73,7 +73,14 @@ public class Game {
         Color.printColorYellow(currentPlayer.getName() + ", ваш ход. Введите команду:  ");
         if (currentPlayer instanceof Bot) {
             Util.sleep(PAUSE_ON_BOT_SHOT);
-            return ((Bot) currentPlayer).getCommand();
+            String command = ((Bot) currentPlayer).getCommand();
+            if(Util.isInteger(command)) {
+                int num = Integer.parseInt(command) + 1;
+                command = String.valueOf(num);
+            }
+            System.out.println(command);
+
+            return command;
         }
 
         return sc.next();
@@ -185,7 +192,7 @@ public class Game {
     }
 
     private void printCurrentPlayerGuns() {
-        char ch;
+        char pointer;
         String color;
         Gun currentGun = currentPlayer.getCurrentGun();
 
@@ -193,13 +200,13 @@ public class Game {
         for (int i = 0; i < currentPlayer.gunCount(); i++) {
             Gun gun = currentPlayer.getGunByNum(i);
             if (currentGun == gun) {
-                ch = POINTER;
+                pointer = POINTER;
                 color = COLOR_FOCUS;
             } else {
-                ch = ' ';
+                pointer = ' ';
                 color = Color.ANSI_RESET;
             }
-            String text = String.format("%c%d. %s   \n", ch, i + 1, gun.info());
+            String text = String.format("%c%d. %s   \n", pointer, i + 1, gun.info());
             Color.printColor(text, color);
         }
 
@@ -242,7 +249,7 @@ public class Game {
             }
             if (shoot()) {
                 Util.pressEnterForContinue();
-                nextPlayer();
+                changePlayer();
                 printPage();
             }
             return;
@@ -267,7 +274,7 @@ public class Game {
     }
 
     //меняем игрока
-    private void nextPlayer() {
+    private void changePlayer() {
         if (otherPlayer().isDead()) {
             return;
         }

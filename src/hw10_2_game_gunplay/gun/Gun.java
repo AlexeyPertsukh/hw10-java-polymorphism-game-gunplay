@@ -22,6 +22,10 @@ public class Gun {
         this.chance = chance;
     }
 
+    public int getCartridge() {
+        return cartridge;
+    }
+
     //сделать выстрел. Возвращает нанесенный урон или -1 если нет боеприпасов
     public int shot() {
         if (cartridge <= 0) { //Выстрел не произведен- нет боеприпасов
