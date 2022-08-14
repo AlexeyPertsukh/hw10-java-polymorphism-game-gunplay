@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Game {
 
-    private static final String VERSION = "ver.2.0";
+    private static final String VERSION = "ver.2.1";
     private static final String COLOR_FOCUS = Color.ANSI_YELLOW;
     private static final String COLOR_DEAD = Color.ANSI_RED;
     public static final String COLOR_HELP = Color.ANSI_BLUE;
@@ -98,7 +98,7 @@ public class Game {
         }
     }
 
-    private void printHeader() {
+    private static void printHeader() {
         Color.setTextColor(COLOR_HEADER);
         System.out.println("-------------------------------------------------------------------------------------------");
         System.out.println("           💀💀💀💀💀   КРОВАВАЯ ПЕРЕСТРЕЛКА   💀💀💀💀💀        ");
