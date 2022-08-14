@@ -39,71 +39,71 @@ public class Color {
 
     }
 
-    public static void printColor(String strPrint, String color){
+    public static void printColor(String string, String color){
         setTextColor(color);
-        System.out.print(strPrint);
+        System.out.print(string);
         resetTextColor();
     }
 
-    public static void printlnColor(String strPrint, String color){
-        printColor(strPrint, color);
+    public static void printlnColor(String string, String color){
+        printColor(string, color);
         System.out.println();
     }
 
-    public static void printColorYellow(String strPrint) {
-        printColor(strPrint, ANSI_YELLOW);
+    public static void printColorYellow(String string) {
+        printColor(string, ANSI_YELLOW);
     }
-    public static void printlnColorYellow(String strPrint) {
-        printlnColor(strPrint, ANSI_YELLOW);
-    }
-
-    public static void printColorBlue(String strPrint) {
-        printColor(strPrint, ANSI_BLUE);
-    }
-    public static void printlnColorBlue(String strPrint) {
-        printlnColor(strPrint, ANSI_BLUE);
+    public static void printlnColorYellow(String string) {
+        printlnColor(string, ANSI_YELLOW);
     }
 
-    public static void printColorPurple(String strPrint) {
-        printColor(strPrint, ANSI_PURPLE);
+    public static void printColorBlue(String string) {
+        printColor(string, ANSI_BLUE);
     }
-    public static void printlnColorPurple(String strPrint) {
-        printlnColor(strPrint, ANSI_PURPLE);
-    }
-
-    public static void printColorGreen(String strPrint) {
-        printColor(strPrint, ANSI_GREEN);
-    }
-    public static void printlnColorGreen(String strPrint) {
-        printlnColor(strPrint, ANSI_GREEN);
+    public static void printlnColorBlue(String string) {
+        printlnColor(string, ANSI_BLUE);
     }
 
-    public static void printColorRed(String strPrint) {
-        printColor(strPrint, ANSI_RED);
+    public static void printColorPurple(String string) {
+        printColor(string, ANSI_PURPLE);
     }
-    public static void printlnColorRed(String strPrint) {
-        printlnColor(strPrint, ANSI_RED);
-    }
-
-    public static void printColorBlack(String strPrint) {
-        printColor(strPrint, ANSI_BLACK);
-    }
-    public static void printlnColorBlack(String strPrint) {
-        printlnColor(strPrint, ANSI_BLACK);
+    public static void printlnColorPurple(String string) {
+        printlnColor(string, ANSI_PURPLE);
     }
 
-    public static void printColorCyan(String strPrint) {
-        printColor(strPrint, ANSI_CYAN);
+    public static void printColorGreen(String string) {
+        printColor(string, ANSI_GREEN);
     }
-    public static void printlnColorCyan(String strPrint) {
-        printlnColor(strPrint, ANSI_CYAN);
+    public static void printlnColorGreen(String string) {
+        printlnColor(string, ANSI_GREEN);
     }
 
-    public static void printColorWhite(String strPrint) {
-        printColor(strPrint, ANSI_WHITE);
+    public static void printColorRed(String string) {
+        printColor(string, ANSI_RED);
     }
-    public static void printlnColorWhite(String strPrint) {
-        printlnColor(strPrint, ANSI_WHITE);
+    public static void printlnColorRed(String string) {
+        printlnColor(string, ANSI_RED);
+    }
+
+    public static void printColorBlack(String string) {
+        printColor(string, ANSI_BLACK);
+    }
+    public static void printlnColorBlack(String string) {
+        printlnColor(string, ANSI_BLACK);
+    }
+
+    public static void printColorCyan(String string) {
+        printColor(string, ANSI_CYAN);
+    }
+    public static void printlnColorCyan(String string) {
+        printlnColor(string, ANSI_CYAN);
+    }
+
+    public static void printColorWhite(String string) {
+        printColor(string, ANSI_WHITE);
+    }
+    public static void printlnColorWhite(String string) {
+        printlnColor(string, ANSI_WHITE);
     }
 
     public static void setTextColor(String color){
