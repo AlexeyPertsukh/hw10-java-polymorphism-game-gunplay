@@ -143,9 +143,9 @@ public class Game {
         printItem("промазал", player1.getMissCount(), player2.getMissCount());
         printItem("оружие", player1.getCurrentGunName(), player2.getCurrentGunName());
 
-        String shortInfoPlayer1 = "(" + player1.shortCurrentGunInfo() + ")";
-        String shortInfoPlayer2 = "(" + player2.shortCurrentGunInfo() + ")";
-        printItem(EMPTY_STR, shortInfoPlayer1, shortInfoPlayer2);
+        String shortGunInfoPlayer1 = "(" + player1.shortCurrentGunInfo() + ")";
+        String shortGunInfoPlayer2 = "(" + player2.shortCurrentGunInfo() + ")";
+        printItem(EMPTY_STR, shortGunInfoPlayer1, shortGunInfoPlayer2);
 
         Color.printlnColor(". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .", COLOR_FOOTER);
 
