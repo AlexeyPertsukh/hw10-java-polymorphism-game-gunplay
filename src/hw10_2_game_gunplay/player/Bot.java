@@ -14,7 +14,7 @@ public class Bot extends Player {
     //закончились патроны- берет другое оружие
     public String getCommand() {
         if (getCurrentGun().getCartridge() == 0) {
-            return String.valueOf(nextNumGunWithCartridge());
+            return String.valueOf(nextNumGun());
         }
         return Game.KEY_SHOOT;           //просто стреляем
     }
@@ -24,7 +24,7 @@ public class Bot extends Player {
         return super.getName() + "[БОТ]";
     }
 
-    private int nextNumGunWithCartridge() {
+    private int nextNumGun() {
         int num = 0;
         while (num < gunCount()) {
             Gun gun = getGunByNum(num);
@@ -33,14 +33,11 @@ public class Bot extends Player {
             }
         }
 
-        while (true) {
-            num++;
-            if (num >= gunCount()) {
-                num = 0;
-            }
-            if (getGunByNum(num).getCartridge() > 0) {
-                return num;
-            }
+        num++;
+        if (num >= gunCount()) {
+            num = 0;
         }
+
+        return num;
     }
 }
