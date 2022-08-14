@@ -1,7 +1,7 @@
 /*
 Цвета: http://surl.li/mrnv
  */
-package hw10_2_game_gunplay;
+package hw10_2_game_gunplay.util;
 public class Color {
 
     public static final String ANSI_RESET = "\u001B[0m";

@@ -1,11 +1,11 @@
-package hw10_2_game_gunplay;
+package hw10_2_game_gunplay.player;
 
-import java.util.Scanner;
+import hw10_2_game_gunplay.Gun;
 
 //Игрок
 public class Player {
 
-    public static int HP_MAX = 60;
+    public static int HP_MAX = 100;
     public static final int NUM_FIRST_GUN = 1;
 
     private final Gun[] guns;
@@ -23,11 +23,6 @@ public class Player {
         this.picture = picture;
         this.guns = guns;
         setFirstGun();
-    }
-
-    //ввод команды
-    public String nextCmd(Scanner sc) {
-        return sc.next();
     }
 
     //получить повреждение

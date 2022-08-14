@@ -1,4 +1,4 @@
-package hw10_2_game_gunplay;
+package hw10_2_game_gunplay.util;
 
 import java.util.Scanner;
 
@@ -47,6 +47,14 @@ public class Util {
         //постоянно пересоздаем сканнер в этом методе из-за глюков при переводе фокуса ввода(курсора) из консоли в код и обратно
         Scanner sc = new Scanner(System.in);
         sc.nextLine();
+    }
+
+    public static int randomInt(int min, int max) {
+        return (int) (Math.random() * (max - min)) + min;
+    }
+
+    public static int randomInt(int max) {
+        return randomInt(0, max);
     }
 
 }

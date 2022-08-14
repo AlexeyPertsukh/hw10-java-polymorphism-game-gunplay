@@ -1,5 +1,11 @@
 package hw10_2_game_gunplay;
 
+import hw10_2_game_gunplay.player.Bot;
+import hw10_2_game_gunplay.player.Player;
+import hw10_2_game_gunplay.util.Color;
+import hw10_2_game_gunplay.util.PictureStorage;
+import hw10_2_game_gunplay.util.Util;
+
 import java.util.Scanner;
 
 public class Game {
@@ -23,6 +29,7 @@ public class Game {
 
     private static final int MODE_PLAYER = 1;
     private static final int MODE_BOT = 2;
+    private static final int PAUSE_ON_BOT_SHOT = 1000;
 
     private Player player1;
     private Player player2;
@@ -65,17 +72,22 @@ public class Game {
 
     private String inputCommand() {
         Color.printColorYellow(currentPlayer.getName() + ", ваш ход. Введите команду:  ");
-        return currentPlayer.nextCmd(sc);
+        if(currentPlayer instanceof Bot) {
+            Util.sleep(PAUSE_ON_BOT_SHOT);
+            return ((Bot) currentPlayer).getCommand();
+        }
+
+        return sc.next();
     }
     //============================================
 
     private void initPlayers(int mode) {
         player1 = new Player(NAME1, Player.HP_MAX, createGuns(), PictureStorage.ASCII_PICTURE_LEFT);
         if(mode == MODE_PLAYER) {
-            player2 = new Player(NAME2, Player.HP_MAX + 10, createGuns(), PictureStorage.ASCII_PICTURE_RIGHT);    //второму- больше патронов
+            player2 = new Player(NAME2, Player.HP_MAX, createGuns(), PictureStorage.ASCII_PICTURE_RIGHT);    //второму- больше патронов
         }
         else {
-            player2 = new Bot(NAME2, Player.HP_MAX + 10, createGuns(), PictureStorage.ASCII_PICTURE_RIGHT);
+            player2 = new Bot(NAME2, Player.HP_MAX, createGuns(), PictureStorage.ASCII_PICTURE_RIGHT);
         }
     }
 
@@ -357,10 +369,10 @@ public class Game {
         return true;
     }
 
-    private Gun[] createGuns() {
+    private static Gun[] createGuns() {
         return new Gun[]{
-                new Gun("Наган", 10, 30, 20, 80),
-                new Gun("Обрез", 25, 40, 10, 50),
+                new Gun("Наган", 15, 30, 20, 80),
+                new Gun("Обрез", 30, 45, 10, 50),
                 new Gun("Граната", 50, 85, 4, 20)
         };
     }

@@ -1,11 +1,10 @@
-package hw10_2_game_gunplay;
+package hw10_2_game_gunplay.player;
 
-import java.util.Scanner;
+import hw10_2_game_gunplay.Game;
+import hw10_2_game_gunplay.Gun;
 
 //Бот
 public class Bot extends Player {
-
-    private final static int PAUSE = 1000;
 
     public Bot(String name, int hitPoint, Gun[] guns, String[] picture) {
         super(name, hitPoint, guns, picture);
@@ -13,9 +12,7 @@ public class Bot extends Player {
 
     //бот стреляет
     //при случае добавить- если закончились патроны, выбрать другое оружие
-    @Override
-    public String nextCmd(Scanner sc) {
-        Util.sleep(PAUSE);
+    public String getCommand() {
         return Game.KEY_SHOOT;           //просто стреляем
     }
 
