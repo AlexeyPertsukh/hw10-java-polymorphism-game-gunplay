@@ -49,12 +49,4 @@ public class Util {
         sc.nextLine();
     }
 
-    public static int randomInt(int min, int max) {
-        return (int) (Math.random() * (max - min)) + min;
-    }
-
-    public static int randomInt(int max) {
-        return randomInt(0, max);
-    }
-
 }

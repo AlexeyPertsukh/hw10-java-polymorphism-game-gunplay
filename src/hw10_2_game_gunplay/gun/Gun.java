@@ -1,6 +1,6 @@
 package hw10_2_game_gunplay.gun;
 
-import hw10_2_game_gunplay.util.Util;
+import java.util.Random;
 
 public class Gun {
 
@@ -28,17 +28,18 @@ public class Gun {
 
     //сделать выстрел. Возвращает нанесенный урон или -1 если нет боеприпасов
     public int shot() {
+        Random random = new Random();
         if (cartridge <= 0) { //Выстрел не произведен- нет боеприпасов
             return CODE_NO_CARTRIDGES;
         }
         cartridge--;
 
-        int random = Util.randomInt(100);
-        if (random > chance) {   //промахнулся?
+        int randomNum = random.nextInt(100);
+        if (randomNum > chance) {   //промахнулся?
             return CODE_MISSED;
         }
 
-        return Util.randomInt(damageMin, damageMax);
+        return random.nextInt(damageMax - damageMin) + damageMin;
     }
 
     public String shortInfo() {
