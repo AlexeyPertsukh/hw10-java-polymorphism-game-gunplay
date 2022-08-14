@@ -52,8 +52,8 @@ public class Main {
 
     private static Gun[] createGuns() {
         return new Gun[]{
-                new Gun("Наган", 10, 25, 20, 80),
-                new Gun("Обрез", 30, 45, 10, 50),
+                new Gun("Наган", 10, 20, 20, 80),
+                new Gun("Обрез", 35, 45, 10, 50),
                 new Gun("Граната", 50, 85, 4, 20)
         };
     }
