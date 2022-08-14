@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Game {
 
-    private static final String VERSION = "ver.2.1";
+    private static final String VERSION = "ver.2.1.1";
     private static final String COLOR_FOCUS = Color.ANSI_YELLOW;
     private static final String COLOR_DEAD = Color.ANSI_RED;
     public static final String COLOR_HELP = Color.ANSI_BLUE;
@@ -255,17 +255,9 @@ public class Game {
         System.out.println("Неизвестная команда");
     }
 
+    //сменить пушку
     private boolean changeGun(int num) {
-        //сменить пушку
-        if (num > 0 && num < currentPlayer.gunCount() + 1) {
-            if (currentPlayer.changeGun(num)) {
-                return true;
-            } else {
-                System.out.println("Поменять пушку не удалось, что-то пошло не так.");
-                return false;
-            }
-        }
-        return false;
+        return currentPlayer.changeGun(num);
     }
 
     //меняем игрока
