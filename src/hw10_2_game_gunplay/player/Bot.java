@@ -1,7 +1,7 @@
 package hw10_2_game_gunplay.player;
 
 import hw10_2_game_gunplay.Game;
-import hw10_2_game_gunplay.Gun;
+import hw10_2_game_gunplay.gun.Gun;
 
 //Бот
 public class Bot extends Player {

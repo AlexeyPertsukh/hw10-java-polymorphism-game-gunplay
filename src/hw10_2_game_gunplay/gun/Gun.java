@@ -1,4 +1,4 @@
-package hw10_2_game_gunplay;
+package hw10_2_game_gunplay.gun;
 
 import hw10_2_game_gunplay.util.Util;
 

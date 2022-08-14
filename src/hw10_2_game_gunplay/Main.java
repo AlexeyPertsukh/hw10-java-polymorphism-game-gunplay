@@ -11,6 +11,10 @@
  */
 package hw10_2_game_gunplay;
 
+import hw10_2_game_gunplay.gun.Grenade;
+import hw10_2_game_gunplay.gun.Gun;
+import hw10_2_game_gunplay.gun.Revolver;
+import hw10_2_game_gunplay.gun.Shotgun;
 import hw10_2_game_gunplay.player.Bot;
 import hw10_2_game_gunplay.player.Player;
 import hw10_2_game_gunplay.util.PictureStorage;
@@ -52,9 +56,9 @@ public class Main {
 
     private static Gun[] createGuns() {
         return new Gun[]{
-                new Gun("Наган", 10, 20, 20, 80),
-                new Gun("Обрез", 35, 45, 10, 50),
-                new Gun("Граната", 50, 85, 4, 20)
+                new Revolver(),
+                new Shotgun(),
+                new Grenade(),
         };
     }
 

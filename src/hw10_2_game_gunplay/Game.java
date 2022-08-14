@@ -1,5 +1,6 @@
 package hw10_2_game_gunplay;
 
+import hw10_2_game_gunplay.gun.Gun;
 import hw10_2_game_gunplay.player.Bot;
 import hw10_2_game_gunplay.player.Player;
 import hw10_2_game_gunplay.util.Color;
