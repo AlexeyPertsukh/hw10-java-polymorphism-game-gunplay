@@ -92,11 +92,15 @@ public class Game {
     }
 
     private Player getDeadPlayer() {
-        if (isWinGame()) {
-            return (player1.isDead()) ? player1 : player2;
-        } else {
-            return null;
+        if (player1.isDead()) {
+            return player1;
         }
+
+        if (player2.isDead()) {
+            return player2;
+        }
+
+        return null;
     }
 
     private static void printHeader() {
